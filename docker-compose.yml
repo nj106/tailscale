@@ -15,6 +15,7 @@ services:
       - TS_USERSPACE=false
       - TS_ACCEPT_DNS=false
       - TS_HOSTNAME=oci-osaka
+      - TS_BOOT_TIMEOUT=30m
     volumes:
       - tailscale_state:/var/lib/tailscale
     healthcheck:
