@@ -5,6 +5,10 @@ services:
     hostname: oci-osaka
     network_mode: host
     restart: unless-stopped
+    entrypoint:
+      - /bin/sh
+      - -c
+      - iptables-nft -C INPUT -p udp --dport 41641 -j ACCEPT 2>/dev/null || iptables-nft -I INPUT 1 -p udp --dport 41641 -j ACCEPT; exec /usr/local/bin/containerboot
     cap_add:
       - NET_ADMIN
       - NET_RAW
@@ -16,6 +20,7 @@ services:
       - TS_ACCEPT_DNS=false
       - TS_HOSTNAME=oci-osaka
       - TS_BOOT_TIMEOUT=30m
+      - TS_TAILSCALED_EXTRA_ARGS=--port=41641
     volumes:
       - tailscale_state:/var/lib/tailscale
     healthcheck:
