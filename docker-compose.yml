@@ -2,7 +2,7 @@ services:
   tailscale:
     image: tailscale/tailscale:latest
     container_name: tailscale
-    hostname: oci-osaka
+    hostname: ${TS_HOSTNAME}
     network_mode: host
     restart: unless-stopped
     entrypoint:
@@ -16,11 +16,11 @@ services:
       - /dev/net/tun:/dev/net/tun
     environment:
       - TS_STATE_DIR=/var/lib/tailscale
-      - TS_USERSPACE=false
-      - TS_ACCEPT_DNS=false
-      - TS_HOSTNAME=oci-osaka
-      - TS_BOOT_TIMEOUT=30m
-      - TS_TAILSCALED_EXTRA_ARGS=--port=41641
+      - TS_USERSPACE=${TS_USERSPACE}
+      - TS_ACCEPT_DNS=${TS_ACCEPT_DNS}
+      - TS_HOSTNAME=${TS_HOSTNAME}
+      - TS_BOOT_TIMEOUT=${TS_BOOT_TIMEOUT}
+      - TS_TAILSCALED_EXTRA_ARGS=${TS_TAILSCALED_EXTRA_ARGS}
     volumes:
       - tailscale_state:/var/lib/tailscale
     healthcheck:
